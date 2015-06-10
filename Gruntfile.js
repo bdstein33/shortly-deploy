@@ -21,11 +21,19 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      //minifiy client side scripts.
+      build: {
+        src: ['public/client/**/*.js', 'public/lib/**/*.js']
+        dest: './public/client/production.min.js'
+      }
+
+
     },
 
     jshint: {
+      //enforces code standards
       files: [
-        // Add filespec list here
+        'Gruntfile.js',
       ],
       options: {
         force: 'true',
@@ -72,7 +80,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('server-dev', function (target) {
+  grunt.registerTask('server-dev', ['concat', 'uglify'], function (target) {
     // Running nodejs in a different process and displaying output on the main console
     var nodemon = grunt.util.spawn({
          cmd: 'grunt',
