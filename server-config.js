@@ -6,6 +6,8 @@ var handler = require('./lib/request-handler');
 
 var app = express();
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');

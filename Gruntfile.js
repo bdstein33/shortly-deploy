@@ -3,7 +3,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      dist: {
+        src: ['public/client/*.js', 'public/lib/*.js'],
+        dest: 'public/dist/production.js'
+      }
     },
+
 
     mochaTest: {
       test: {
@@ -21,13 +26,21 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      //minifiy client side scripts.
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+      },
       build: {
-        src: ['public/client/**/*.js', 'public/lib/**/*.js']
-        dest: './public/client/production.min.js'
+        src: 'public/dist/production.js',
+        dest: 'public/dist/production.min.js'
       }
 
+    },
 
+    cssmin: {
+      build: {
+        src: 'public/style.css',
+        dest: 'public/dist/style.min.css'
+      }
     },
 
     jshint: {
@@ -45,8 +58,6 @@ module.exports = function(grunt) {
       }
     },
 
-    cssmin: {
-    },
 
     watch: {
       scripts: {
@@ -80,7 +91,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('server-dev', ['concat', 'uglify'], function (target) {
+  grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
     var nodemon = grunt.util.spawn({
          cmd: 'grunt',
@@ -115,6 +126,8 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', [
     // add your deploy tasks here
   ]);
+
+  grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
 
 
 };
