@@ -26,11 +26,11 @@ LinkSchema.pre('save', function(next) {
   next();
 });
 
-var Link = mongoose.model('Link', LinkSchema);
+exports.Link = mongoose.model('Link', LinkSchema);
 
 
 var UserSchema = mongoose.Schema({
-  username: String,
+  username: {type: String, unique: true },
   password: String
 });
 
@@ -48,14 +48,15 @@ UserSchema.pre('save', function(next) {
 UserSchema.methods.comparePassword = function(attemptedPassword, callback) {
   bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
     callback(isMatch);
-});
+  });
+};
 
-var User = mongoose.model('User', UserSchema);
+exports.User = mongoose.model('User', UserSchema);
 
 
 
 // Test Code
-// var link = new Link({
+// var link = new exports.Link({
 //   url: 'http://www.google.com',
 //   base_url: 'www.google.com',
 //   code: 'urlcreated',
@@ -71,7 +72,7 @@ var User = mongoose.model('User', UserSchema);
 //   console.log(link);
 // });
 
-// var user = new User({
+// var user = new exports.User({
 //   username: "Freddy",
 //   password: "frenchfries"
 // });
@@ -83,4 +84,3 @@ var User = mongoose.model('User', UserSchema);
 //   console.log('new USER created');
 //   console.log(user);
 // });
-
