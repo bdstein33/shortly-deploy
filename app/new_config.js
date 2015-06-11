@@ -7,7 +7,7 @@ if(process.env.NODE_ENV === 'development'){
   mongoose.connect('mongodb://localhost/test');
 } else {
   //use db hosted on auzre.
-  mongoose.connect('mongodb://localhost/test');
+  mongoose.connect('mongodb://MongoLab-s:nhdxwrdJxO5fd43YHeMu5qIxPl4Pb.nstnAkMsA7VDE-@ds036638.mongolab.com:36638/MongoLab-s');
 }
 
 var LinkSchema = mongoose.Schema({
@@ -15,7 +15,7 @@ var LinkSchema = mongoose.Schema({
   base_url: String,
   code: String,
   title: String,
-  visits: Number
+  visits: {type: Number, default: 0}
 });
 
 LinkSchema.pre('save', function(next) {
@@ -59,7 +59,7 @@ exports.User = mongoose.model('User', UserSchema);
 // var link = new exports.Link({
 //   url: 'http://www.google.com',
 //   base_url: 'www.google.com',
-//   code: 'urlcreated',
+//   code: 'urlcre',
 //   title: 'Google',
 //   visits: 1
 // });

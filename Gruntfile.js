@@ -85,7 +85,7 @@ module.exports = function(grunt) {
     git_deploy: {
       your_target: {
         options: {
-          url: 'https://bdstein33@mrshortly.scm.azurewebsites.net/mrshortly.git'
+          url: 'https://bdstein33@mrshortly1.scm.azurewebsites.net/mrshortly1.git'
         },
         src: 'app/*'
       }
