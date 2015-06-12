@@ -1,5 +1,5 @@
 var app = require('./server-config.js');
-var mongo = require('./app/new_config.js');
+var mongo = require('./app/config.js');
 
 
 var port = process.env.PORT || 4568;

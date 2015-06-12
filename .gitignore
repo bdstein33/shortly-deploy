@@ -4,6 +4,7 @@
 azure.err
 iisnode.yml
 node_modules
+Gruntfile.js
 
 # Icon must ends with two \r.
 Icon

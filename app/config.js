@@ -1,45 +1,50 @@
-var Bookshelf = require('bookshelf');
-var path = require('path');
+var mongoose = require('mongoose');
+var crypto = require('crypto');
+var bcrypt = require('bcrypt-nodejs');
 
-var db = Bookshelf.initialize({
-  client: 'sqlite3',
-  connection: {
-    host: '127.0.0.1',
-    user: 'your_database_user',
-    password: 'password',
-    database: 'shortlydb',
-    charset: 'utf8',
-    filename: path.join(__dirname, '../db/shortly.sqlite')
-  }
-});
 
-db.knex.schema.hasTable('urls').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('urls', function (link) {
-      link.increments('id').primary();
-      link.string('url', 255);
-      link.string('base_url', 255);
-      link.string('code', 100);
-      link.string('title', 255);
-      link.integer('visits');
-      link.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
-
-db.knex.schema.hasTable('users').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('users', function (user) {
-      user.increments('id').primary();
-      user.string('username', 100).unique();
-      user.string('password', 100);
-      user.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
+if(process.env.NODE_ENV === 'development'){
+  var db = mongoose.connect('mongodb://localhost/test');
+} else {
+  //use db hosted on auzre.
+  var db = mongoose.connect('mongodb://MongoLab-s:nhdxwrdJxO5fd43YHeMu5qIxPl4Pb.nstnAkMsA7VDE-@ds036638.mongolab.com:36638/MongoLab-s');
+}
 
 module.exports = db;
+
+
+
+
+
+
+
+
+// Test Code
+// var link = new exports.Link({
+//   url: 'http://www.google.com',
+//   base_url: 'www.google.com',
+//   code: 'urlcre',
+//   title: 'Google',
+//   visits: 1
+// });
+
+// link.save(function (err) {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log('new LINK created');
+//   console.log(link);
+// });
+
+// var user = new exports.User({
+//   username: "Freddy",
+//   password: "frenchfries"
+// });
+
+// user.save(function(err) {
+//  if (err) {
+//     console.log(err);
+//   }
+//   console.log('new USER created');
+//   console.log(user);
+// });
